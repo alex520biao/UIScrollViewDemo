@@ -50,7 +50,7 @@
         _tbFullScreen=tbFullScreen;
         
         if (_tbFullScreen) {
-            NSLog(@"_tbFullScreenYES");
+//            NSLog(@"_tbFullScreenYES");
             __block ViewController *controller=(ViewController*)self;
             [UIView animateWithDuration:time animations:^{
                 CGRect frame=self.navBar.frame;
@@ -65,7 +65,7 @@
         }
         
         if (!_tbFullScreen) {
-            NSLog(@"_tbFullScreenNO");
+//            NSLog(@"_tbFullScreenNO");
             __block ViewController *controller=(ViewController*)self;
             [UIView animateWithDuration:time animations:^{
                 CGRect frame=self.navBar.frame;
@@ -84,26 +84,31 @@
 
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGPoint  vel=[scrollView velocityWhenScrolling];
+    CGVelocity  vel=[scrollView velocityWhenScrolling];
     
-    //拖动越过内容最顶部继续拖动强制设置为_tbFullScreen=NO
+    //滚动越过content最顶部继续拖动强制设置为_tbFullScreen=NO
     if (scrollView.contentOffset.y<0) {
         [self setTbFullScreen:NO time:0.2];
         return;
     }
-    
+
     //contentSize小于frame.size,内容不满一屏，无需调用setTbFullScreen
     if (scrollView.contentSize.height<scrollView.bounds.size.height) {
         return;
     }else{
+        //滚动越过content最顶部
+        if (scrollView.contentOffset.y<=0) {
+            return;
+        }
+        //滚动越过内容content最底部
         if(scrollView.contentOffset.y>0&&scrollView.contentOffset.y>= scrollView.contentSize.height-scrollView.bounds.size.height){
             return;
         }
     }
 
-    if (fabs(vel.y)> 200) {
+    if (fabs(vel.velY)> 200) {
         BOOL full=NO;
-        if (vel.y>0) {
+        if (vel.velY>0) {
             full=YES;
         }else{
             full=NO;
@@ -148,7 +153,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 300;
+    return 1000;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -41,7 +41,8 @@
     objc_setAssociatedObject(self, kOldContentOffsetKey, [NSValue valueWithCGPoint:contentOffset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(CGPoint)velocityWhenScrolling{
+//类似scrollViewWillEndDragging:withVelocity:targetContentOffset:方法，它使用CGPoint表示CGVelocity
+-(CGVelocity)velocityWhenScrolling{
     NSTimeInterval curCallTime = [[NSDate date] timeIntervalSince1970];
 //    double curCallTime = CACurrentMediaTime();
     double timeDelta = curCallTime - self.prevCallTime;
@@ -56,7 +57,7 @@
 
     self.prevCallTime = curCallTime;
     self.oldContentOffset = curCallOffset;    
-    CGPoint velocity=CGPointMake(velocityX, velocityY);
+    CGVelocity velocity=CGVelocityMake(velocityX, velocityY);
     return velocity;
 }
 
