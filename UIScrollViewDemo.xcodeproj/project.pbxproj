@@ -268,6 +268,7 @@
 		E19FA41C17B54FD600F2B26D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIScrollViewDemo/UIScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "UIScrollViewDemo/UIScrollViewDemo-Info.plist";
@@ -279,6 +280,7 @@
 		E19FA41D17B54FD600F2B26D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIScrollViewDemo/UIScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "UIScrollViewDemo/UIScrollViewDemo-Info.plist";
@@ -306,6 +308,7 @@
 				E19FA41D17B54FD600F2B26D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

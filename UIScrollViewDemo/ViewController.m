@@ -85,6 +85,7 @@
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGVelocity  vel=[scrollView velocityWhenScrolling];
+    NSLog(@"velocityY:%f,velocityX:%f",vel.velY,vel.velX);
     
     //滚动越过content最顶部继续拖动强制设置为_tbFullScreen=NO
     if (scrollView.contentOffset.y<0) {

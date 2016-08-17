@@ -27,6 +27,19 @@ CGVelocityMake(CGFloat velX, CGFloat velY)
 
 
 @interface UIScrollView (Scroll)
+
+@property(nonatomic,assign)double prevCallTime;
+@property(nonatomic,assign)CGPoint oldContentOffset;
+
+
+/*!
+ *  @brief  获取UIScrollView滚动速度
+ *  @note   此方法必须在UIScrollViewDelegate的scrollViewDidScroll:方法中调用
+ *  @note   scrollViewWillEndDragging:withVelocity:targetContentOffset:代理方法只能获取到用户停止拖动瞬间的滚动速度(它使用CGPoint表示CGVelocity),
+ velocityWhenScrolling可以获取到任何时候的滚动速度
+ *
+ *  @return UIScrollView滚动速度
+ */
 -(CGVelocity)velocityWhenScrolling;
 
 @end

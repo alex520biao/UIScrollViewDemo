@@ -8,12 +8,11 @@
 
 #import "UIScrollView+Scroll.h"
 
-#define kPrevCallTimeKey @"prevCallTime"
-#define kOldContentOffsetKey @"oldContentOffset"
 @implementation UIScrollView (Scroll)
 
+@dynamic prevCallTime;
 - (double)prevCallTime {
-    NSNumber *number = objc_getAssociatedObject(self, kPrevCallTimeKey);
+    NSNumber *number = objc_getAssociatedObject(self, @selector(prevCallTime));
     if (number==nil) {
         return 0;
     }else{
@@ -23,12 +22,12 @@
 }
 
 -(void)setPrevCallTime:(double)prevCallTime{
-    objc_setAssociatedObject(self, kPrevCallTimeKey, [NSNumber numberWithDouble:prevCallTime], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(prevCallTime), [NSNumber numberWithDouble:prevCallTime], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-
+@dynamic oldContentOffset;
 - (CGPoint)oldContentOffset {
-    NSValue *value = objc_getAssociatedObject(self, kOldContentOffsetKey);
+    NSValue *value = objc_getAssociatedObject(self, @selector(oldContentOffset));
     if (value==nil) {
         return self.contentOffset;
     }else{
@@ -38,13 +37,21 @@
 }
 
 -(void)setOldContentOffset:(CGPoint)contentOffset{
-    objc_setAssociatedObject(self, kOldContentOffsetKey, [NSValue valueWithCGPoint:contentOffset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(oldContentOffset), [NSValue valueWithCGPoint:contentOffset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-//类似scrollViewWillEndDragging:withVelocity:targetContentOffset:方法，它使用CGPoint表示CGVelocity
+/*!
+ *  @brief  获取UIScrollView滚动速度
+ *  @note   此方法必须在UIScrollViewDelegate的scrollViewDidScroll:方法中调用
+ *  @note   scrollViewWillEndDragging:withVelocity:targetContentOffset:代理方法只能获取到用户停止拖动瞬间的滚动速度(它使用CGPoint表示CGVelocity),
+ velocityWhenScrolling可以获取到任何时候的滚动速度
+ *
+ *  @return UIScrollView滚动速度
+ */
 -(CGVelocity)velocityWhenScrolling{
-    NSTimeInterval curCallTime = [[NSDate date] timeIntervalSince1970];
-//    double curCallTime = CACurrentMediaTime();
+    //curCallTime为时间戳timeIntervalSince1970与CACurrentMediaTime均可
+//    NSTimeInterval curCallTime = [[NSDate date] timeIntervalSince1970];
+    double curCallTime = CACurrentMediaTime();
     double timeDelta = curCallTime - self.prevCallTime;
     CGPoint curCallOffset = self.contentOffset;
     double offsetDeltaY = curCallOffset.y - self.oldContentOffset.y;
